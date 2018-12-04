@@ -11,8 +11,8 @@
 	<name>spring-boot-demo</name>
 	<description>Demo project for Spring Boot</description>
 	
-	<pluginRepositories>
-		<pluginRepository>
+	<repositories>
+		<repository>
 			<id>nasdanika-html-snapshots</id>
 			<name>nasdanika-html-snapshots</name>
 			<url>https://www.nasdanika.org/products/html/2.0.0-SNAPSHOT/maven-repository</url>
@@ -20,8 +20,8 @@
 				<enabled>true</enabled>
 			</snapshots>
 			<layout>default</layout>
-		</pluginRepository>
-	</pluginRepositories>		
+		</repository>
+	</repositories>		
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -88,7 +88,6 @@
 			<artifactId>json</artifactId>
 			<version>20180130</version>
 		</dependency>
-		
 	</dependencies>
 
 	<build>
