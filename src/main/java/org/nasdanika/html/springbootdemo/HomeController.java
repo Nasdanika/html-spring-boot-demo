@@ -1,6 +1,7 @@
 package org.nasdanika.html.springbootdemo;
 
 import java.net.URL;
+import java.util.Collections;
 
 import org.json.JSONObject;
 import org.json.JSONTokener;
@@ -29,7 +30,7 @@ public class HomeController {
 	
 	@RequestMapping("/")
 	public String home() throws Exception {
-		try (Application app = new BootstrapContainerApplication(Theme.Litera) {
+		try (Application app = new BootstrapContainerApplication(Theme.Litera, false) {
 			
 			{
 				container.border(Color.DANGER);
@@ -37,14 +38,14 @@ public class HomeController {
 				navigationBar.border(Color.DANGER);
 				navigationPanel.border(Color.DANGER).widthAuto();
 				footer.border(Color.DANGER);
-				content.border(Color.DANGER);
+				contentPanel.border(Color.DANGER);
 			}
 			
 		}) {
 			app.header("Header")
 				.navigationBar("Navigation bar")
 				.navigationPanel("Navigation panel")
-				.content("Content")
+				.contentPanel("Content")
 				.footer("Footer");
 			
 			return app.toString();
@@ -55,7 +56,7 @@ public class HomeController {
 	public String actionApp() throws Exception {
 		JSONObject json = new JSONObject(new JSONTokener(new URL("https://www.nasdanika.org/products/html/2.0.0-SNAPSHOT/test-dumps/app/action/action.json").openStream()));
 		ContentAction contentAction = new ContentAction(json.toMap());
-		try (Application app = new BootstrapContainerApplication(Theme.Default) {
+		try (Application app = new BootstrapContainerApplication(Theme.Default, true) {
 			
 			{
 				header.background(Color.PRIMARY);
@@ -84,10 +85,10 @@ public class HomeController {
 			}
 			
 		}) {
-			ApplicationBuilder appBuilder = new ActionApplicationBuilder(contentAction.getChildren().get(0).getChildren().get(0)) {
+			ApplicationBuilder appBuilder = new ActionApplicationBuilder(contentAction.getChildren().get(0).getChildren().get(0), Collections.emptyMap()) {
 				@Override
-				protected Object generateHeader(ViewGenerator viewGenerator, Object result) {
-					return ((Tag) super.generateHeader(viewGenerator, result)).addClass("text-dark", "text-decoration: none");
+				protected Object generateHeader(ViewGenerator viewGenerator) {
+					return ((Tag) super.generateHeader(viewGenerator)).addClass("text-dark", "text-decoration: none");
 				}
 			};							
 			appBuilder.build(app);
