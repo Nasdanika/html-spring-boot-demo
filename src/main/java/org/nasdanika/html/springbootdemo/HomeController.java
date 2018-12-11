@@ -89,7 +89,7 @@ public class HomeController {
 		ApplicationBuilder appBuilder = new ActionApplicationBuilder(contentAction.getChildren().get(0).getChildren().get(0), Collections.emptyMap()) {
 			@Override
 			protected Object generateHeader(ViewGenerator viewGenerator) {
-				return ((Tag) super.generateHeader(viewGenerator)).addClass("text-dark", "text-decoration: none");
+				return ((Tag) super.generateHeader(viewGenerator)).addClass("text-dark").style().text().decoration().none();
 			}
 		};							
 		appBuilder.build(app);
