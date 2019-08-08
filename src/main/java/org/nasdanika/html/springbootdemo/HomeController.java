@@ -1,12 +1,14 @@
 package org.nasdanika.html.springbootdemo;
 
 import java.net.URL;
-import java.util.Collections;
 
 import org.json.JSONObject;
 import org.json.JSONTokener;
+import org.nasdanika.common.PrintStreamProgressMonitor;
+import org.nasdanika.common.ProgressMonitor;
 import org.nasdanika.html.Select;
 import org.nasdanika.html.Tag;
+import org.nasdanika.html.app.Action;
 import org.nasdanika.html.app.Application;
 import org.nasdanika.html.app.ApplicationBuilder;
 import org.nasdanika.html.app.ViewGenerator;
@@ -86,13 +88,16 @@ public class HomeController {
 			
 		};
 		
-		ApplicationBuilder appBuilder = new ActionApplicationBuilder(contentAction.getChildren().get(0).getChildren().get(0), Collections.emptyMap()) {
+		Action activeAction = contentAction.getChildren().get(0).getChildren().get(0);
+		ApplicationBuilder appBuilder = new ActionApplicationBuilder(activeAction) {
+			
 			@Override
-			protected Object generateHeader(ViewGenerator viewGenerator) {
-				return ((Tag) super.generateHeader(viewGenerator)).addClass("text-dark").style().text().decoration().none();
+			protected Object generateHeader(ViewGenerator viewGenerator, ProgressMonitor progressMonitor) {
+				return ((Tag) super.generateHeader(viewGenerator, progressMonitor)).addClass("text-dark").style().text().decoration().none();
 			}
 		};							
-		appBuilder.build(app);
+		ProgressMonitor progressMonitor = new PrintStreamProgressMonitor();
+		appBuilder.build(app, progressMonitor);
 		return app.toString();
 	}
 
